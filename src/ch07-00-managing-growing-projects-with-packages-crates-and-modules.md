@@ -2,51 +2,23 @@
 
 <a id="managing-growing-projects-with-packages-crates-and-modules"></a>
 
-# Packages, Crates, and Modules
+# 使用包（Package）、Crate 和模块（Module）管理不断增长的项目（Managing Growing Projects with Packages, Crates, and Modules）
 
-As you write large programs, organizing your code will become increasingly
-important. By grouping related functionality and separating code with distinct
-features, you’ll clarify where to find code that implements a particular
-feature and where to go to change how a feature works.
+随着你编写大型程序，组织代码将变得越来越重要。通过对相关功能进行分组，并分隔具有不同特性的代码，你将明确知道在哪里可以找到实现特定功能的代码，以及在哪里更改功能的工作方式。
 
-The programs we’ve written so far have been in one module in one file. As a
-project grows, you should organize code by splitting it into multiple modules
-and then multiple files. A package can contain multiple binary crates and
-optionally one library crate. As a package grows, you can extract parts into
-separate crates that become external dependencies. This chapter covers all
-these techniques. For very large projects comprising a set of interrelated
-packages that evolve together, Cargo provides workspaces, which we’ll cover in
-[“Cargo Workspaces”][workspaces]<!-- ignore --> in Chapter 14.
+我们目前编写的程序都放在一个文件中的一个模块中。随着项目增长，你应该将代码组织成多个模块，然后再分成多个文件。一个包（Package）可以包含多个二进制 crate，并可选择包含一个库 crate。随着包的增长，你可以将部分内容提取到单独的 crate 中，使其成为外部依赖。本章将涵盖所有这些技术。对于由一组相互关联且共同演进的包组成的大型项目，Cargo 提供了工作空间（Workspace），我们将在第 14 章的[“Cargo 工作空间”][workspaces]<!-- ignore -->中介绍。
 
-We’ll also discuss encapsulating implementation details, which lets you reuse
-code at a higher level: Once you’ve implemented an operation, other code can
-call your code via its public interface without having to know how the
-implementation works. The way you write code defines which parts are public for
-other code to use and which parts are private implementation details that you
-reserve the right to change. This is another way to limit the amount of detail
-you have to keep in your head.
+我们还将讨论封装（Encapsulation）实现细节，这让你能够在更高层次上重用代码：一旦你实现了一个操作，其他代码可以通过其公共接口（Public Interface）调用你的代码，而无需知道实现的具体工作方式。编写代码的方式决定了哪些部分是供其他代码使用的公共部分，哪些是你保留修改权利的私有实现细节。这是另一种限制你需要记住的细节量的方法。
 
-A related concept is scope: The nested context in which code is written has a
-set of names that are defined as “in scope.” When reading, writing, and
-compiling code, programmers and compilers need to know whether a particular
-name at a particular spot refers to a variable, function, struct, enum, module,
-constant, or other item and what that item means. You can create scopes and
-change which names are in or out of scope. You can’t have two items with the
-same name in the same scope; tools are available to resolve name conflicts.
+一个相关的概念是作用域（Scope）：代码编写的嵌套上下文中有一组被定义为"在作用域内"的名称。在阅读、编写和编译代码时，程序员和编译器需要知道特定位置的特定名称是指变量、函数、结构体（Struct）、枚举（Enum）、模块（Module）、常量还是其他项，以及该项的含义。你可以创建作用域，并更改哪些名称在作用域内或不在作用域内。你不能在同一个作用域中拥有两个同名的项；有工具可用于解决名称冲突。
 
-Rust has a number of features that allow you to manage your code’s
-organization, including which details are exposed, which details are private,
-and what names are in each scope in your programs. These features, sometimes
-collectively referred to as the _module system_, include:
+Rust 有许多特性，可用于管理代码的组织，包括哪些细节被暴露、哪些细节是私有的，以及程序中每个作用域中有哪些名称。这些特性有时统称为**模块系统**（Module System），包括：
 
-* **Packages**: A Cargo feature that lets you build, test, and share crates
-* **Crates**: A tree of modules that produces a library or executable
-* **Modules and use**: Let you control the organization, scope, and privacy of
-paths
-* **Paths**: A way of naming an item, such as a struct, function, or module
+* **包（Package）**：一种 Cargo 特性，用于构建、测试和共享 crate
+* **Crate**：生成库（Library）或可执行文件（Executable）的模块树
+* **模块（Module）和 use**：允许你控制路径（Path）的组织、作用域和私有性（Privacy）
+* **路径（Path）**：命名某个项（Item）的方式，例如结构体、函数或模块
 
-In this chapter, we’ll cover all these features, discuss how they interact, and
-explain how to use them to manage scope. By the end, you should have a solid
-understanding of the module system and be able to work with scopes like a pro!
+在本章中，我们将涵盖所有这些特性，讨论它们如何交互，并说明如何使用它们来管理作用域。到本章结束时，你应该对模块系统有扎实的理解，并能像专业人士一样处理作用域！
 
 [workspaces]: ch14-03-cargo-workspaces.html

@@ -1,45 +1,20 @@
-## Packages and Crates
+## 包（Package）和 Crate（Packages and Crates）
 
-The first parts of the module system we’ll cover are packages and crates.
+我们将介绍的模块系统的第一部分是包（Package）和 crate。
 
-A _crate_ is the smallest amount of code that the Rust compiler considers at a
-time. Even if you run `rustc` rather than `cargo` and pass a single source code
-file (as we did all the way back in [“Rust Program Basics”][basics]<!-- ignore
---> in Chapter 1), the compiler considers that file to be a crate. Crates can
-contain modules, and the modules may be defined in other files that get
-compiled with the crate, as we’ll see in the coming sections.
+**Crate** 是 Rust 编译器在单次处理中考虑的最小代码量。即使你运行 `rustc` 而不是 `cargo`，并传递单个源代码文件（正如我们在第 1 章的[“Rust 程序基础”][basics]<!-- ignore -->中所做的那样），编译器也会将该文件视为一个 crate。Crate 可以包含模块（Module），模块可以定义在其他文件中，并与 crate 一起编译，我们将在接下来的小节中看到。
 
-A crate can come in one of two forms: a binary crate or a library crate.
-_Binary crates_ are programs you can compile to an executable that you can run,
-such as a command line program or a server. Each must have a function called
-`main` that defines what happens when the executable runs. All the crates we’ve
-created so far have been binary crates.
+Crate 有两种形式：二进制 crate（Binary Crate）或库 crate（Library Crate）。**二进制 crate** 是可以编译为可执行文件的程序，比如命令行程序或服务器。每个二进制 crate 必须有一个名为 `main` 的函数，定义可执行文件运行时发生什么。到目前为止，我们创建的所有 crate 都是二进制 crate。
 
-_Library crates_ don’t have a `main` function, and they don’t compile to an
-executable. Instead, they define functionality intended to be shared with
-multiple projects. For example, the `rand` crate we used in [Chapter
-2][rand]<!-- ignore --> provides functionality that generates random numbers.
-Most of the time when Rustaceans say “crate,” they mean library crate, and they
-use “crate” interchangeably with the general programming concept of a “library.”
+**库 crate** 没有 `main` 函数，也不会编译为可执行文件。相反，它们定义了旨在与多个项目共享的功能。例如，我们在[第 2 章][rand]<!-- ignore -->中使用的 `rand` crate 提供了生成随机数的功能。大多数情况下，当 Rust 程序员说"crate"时，他们指的是库 crate，并且他们将"crate"与通用编程概念中的"库"（Library）混用。
 
-The _crate root_ is a source file that the Rust compiler starts from and makes
-up the root module of your crate (we’ll explain modules in depth in [“Control
-Scope and Privacy with Modules”][modules]<!-- ignore -->).
+**Crate 根**（Crate Root）是一个源代码文件，Rust 编译器从它开始，它构成了你的 crate 的根模块（Root Module）（我们将在[“使用模块控制作用域和私有性”][modules]<!-- ignore -->中深入讲解模块）。
 
-A _package_ is a bundle of one or more crates that provides a set of
-functionality. A package contains a _Cargo.toml_ file that describes how to
-build those crates. Cargo is actually a package that contains the binary crate
-for the command line tool you’ve been using to build your code. The Cargo
-package also contains a library crate that the binary crate depends on. Other
-projects can depend on the Cargo library crate to use the same logic the Cargo
-command line tool uses.
+**包**（Package）是一个或多个 crate 的集合，提供一组功能。一个包包含一个 _Cargo.toml_ 文件，描述如何构建这些 crate。Cargo 本身实际上就是一个包，它包含了我们一直用来构建代码的命令行工具的二进制 crate。Cargo 包还包含一个该二进制 crate 所依赖的库 crate。其他项目可以依赖 Cargo 库 crate，来使用 Cargo 命令行工具所使用的相同逻辑。
 
-A package can contain as many binary crates as you like, but at most only one
-library crate. A package must contain at least one crate, whether that’s a
-library or binary crate.
+一个包可以包含任意多的二进制 crate，但最多只能包含一个库 crate。一个包必须至少包含一个 crate，无论是库 crate 还是二进制 crate。
 
-Let’s walk through what happens when we create a package. First, we enter the
-command `cargo new my-project`:
+让我们看看创建包时会发生什么。首先，我们输入命令 `cargo new my-project`：
 
 ```console
 $ cargo new my-project
@@ -51,21 +26,9 @@ $ ls my-project/src
 main.rs
 ```
 
-After we run `cargo new my-project`, we use `ls` to see what Cargo creates. In
-the _my-project_ directory, there’s a _Cargo.toml_ file, giving us a package.
-There’s also a _src_ directory that contains _main.rs_. Open _Cargo.toml_ in
-your text editor and note that there’s no mention of _src/main.rs_. Cargo
-follows a convention that _src/main.rs_ is the crate root of a binary crate
-with the same name as the package. Likewise, Cargo knows that if the package
-directory contains _src/lib.rs_, the package contains a library crate with the
-same name as the package, and _src/lib.rs_ is its crate root. Cargo passes the
-crate root files to `rustc` to build the library or binary.
+运行 `cargo new my-project` 后，我们使用 `ls` 来查看 Cargo 创建了什么。在 _my-project_ 目录中，有一个 _Cargo.toml_ 文件，这就是一个包。还有一个 _src_ 目录，其中包含 _main.rs_。在文本编辑器中打开 _Cargo.toml_，注意其中没有提到 _src/main.rs_。Cargo 遵循一个约定，即 _src/main.rs_ 是与包同名的二进制 crate 的 crate 根。同样，Cargo 知道如果包目录中包含 _src/lib.rs_，则该包包含一个与包同名的库 crate，并且 _src/lib.rs_ 是其 crate 根。Cargo 将 crate 根文件传递给 `rustc` 来构建库或二进制文件。
 
-Here, we have a package that only contains _src/main.rs_, meaning it only
-contains a binary crate named `my-project`. If a package contains _src/main.rs_
-and _src/lib.rs_, it has two crates: a binary and a library, both with the same
-name as the package. A package can have multiple binary crates by placing files
-in the _src/bin_ directory: Each file will be a separate binary crate.
+在这里，我们有一个只包含 _src/main.rs_ 的包，这意味着它只包含一个名为 `my-project` 的二进制 crate。如果一个包同时包含 _src/main.rs_ 和 _src/lib.rs_，则它有两个 crate：一个二进制 crate 和一个库 crate，两者都与包同名。一个包可以通过在 _src/bin_ 目录中放置文件来拥有多个二进制 crate：每个文件都将是一个单独的二进制 crate。
 
 [basics]: ch01-02-hello-world.html#rust-program-basics
 [modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html

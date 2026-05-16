@@ -1,22 +1,12 @@
-## Separating Modules into Different Files
+## 将模块分离到不同文件中（Separating Modules into Different Files）
 
-So far, all the examples in this chapter defined multiple modules in one file.
-When modules get large, you might want to move their definitions to a separate
-file to make the code easier to navigate.
+到目前为止，本章中的所有示例都在一个文件中定义了多个模块。当模块变得很大时，你可能希望将其定义移到单独的文件中，以使代码更容易浏览。
 
-For example, let’s start from the code in Listing 7-17 that had multiple
-restaurant modules. We’ll extract modules into files instead of having all the
-modules defined in the crate root file. In this case, the crate root file is
-_src/lib.rs_, but this procedure also works with binary crates whose crate root
-file is _src/main.rs_.
+例如，让我们从示例 7-17 中包含多个餐厅模块的代码开始。我们将模块提取到文件中，而不是将所有模块定义在 crate 根文件中。在本例中，crate 根文件是 _src/lib.rs_，但此过程也适用于 crate 根文件为 _src/main.rs_ 的二进制 crate。
 
-First, we’ll extract the `front_of_house` module to its own file. Remove the
-code inside the curly brackets for the `front_of_house` module, leaving only
-the `mod front_of_house;` declaration, so that _src/lib.rs_ contains the code
-shown in Listing 7-21. Note that this won’t compile until we create the
-_src/front_of_house.rs_ file in Listing 7-22.
+首先，我们将 `front_of_house` 模块提取到自己的文件中。删除 `front_of_house` 模块大括号内的代码，只保留 `mod front_of_house;` 声明，这样 _src/lib.rs_ 包含示例 7-21 中所示的代码。请注意，在我们创建示例 7-22 中的 _src/front_of_house.rs_ 文件之前，这段代码不会编译。
 
-<Listing number="7-21" file-name="src/lib.rs" caption="Declaring the `front_of_house` module whose body will be in *src/front_of_house.rs*">
+<Listing number="7-21" file-name="src/lib.rs" caption="声明 `front_of_house` 模块，其函数体将在 *src/front_of_house.rs* 中">
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/lib.rs}}
@@ -24,12 +14,9 @@ _src/front_of_house.rs_ file in Listing 7-22.
 
 </Listing>
 
-Next, place the code that was in the curly brackets into a new file named
-_src/front_of_house.rs_, as shown in Listing 7-22. The compiler knows to look
-in this file because it came across the module declaration in the crate root
-with the name `front_of_house`.
+接下来，将原来在大括号内的代码放入一个名为 _src/front_of_house.rs_ 的新文件中，如示例 7-22 所示。编译器知道要在此文件中查找，因为它在 crate 根中遇到了名为 `front_of_house` 的模块声明。
 
-<Listing number="7-22" file-name="src/front_of_house.rs" caption="Definitions inside the `front_of_house` module in *src/front_of_house.rs*">
+<Listing number="7-22" file-name="src/front_of_house.rs" caption="*src/front_of_house.rs* 中 `front_of_house` 模块内部的定义">
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
@@ -37,22 +24,11 @@ with the name `front_of_house`.
 
 </Listing>
 
-Note that you only need to load a file using a `mod` declaration _once_ in your
-module tree. Once the compiler knows the file is part of the project (and knows
-where in the module tree the code resides because of where you’ve put the `mod`
-statement), other files in your project should refer to the loaded file’s code
-using a path to where it was declared, as covered in the [“Paths for Referring
-to an Item in the Module Tree”][paths]<!-- ignore --> section. In other words,
-`mod` is _not_ an “include” operation that you may have seen in other
-programming languages.
+请注意，你只需要在模块树中**一次**使用 `mod` 声明来加载一个文件。一旦编译器知道该文件是项目的一部分（并且因为 `mod` 语句的位置而知道代码在模块树中的位置），项目中的其他文件应使用指向其声明位置的路径来引用该已加载文件的代码，如["引用模块树中项的路径"][paths]<!-- ignore -->一节所述。换句话说，`mod` **不是**你在其他编程语言中可能见过的"include"操作。
 
-Next, we’ll extract the `hosting` module to its own file. The process is a bit
-different because `hosting` is a child module of `front_of_house`, not of the
-root module. We’ll place the file for `hosting` in a new directory that will be
-named for its ancestors in the module tree, in this case _src/front_of_house_.
+接下来，我们将 `hosting` 模块提取到自己的文件中。这个过程略有不同，因为 `hosting` 是 `front_of_house` 的子模块，而不是根模块的子模块。我们将 `hosting` 的文件放在一个以其在模块树中的祖先命名的新目录中，在本例中为 _src/front_of_house_。
 
-To start moving `hosting`, we change _src/front_of_house.rs_ to contain only
-the declaration of the `hosting` module:
+要开始移动 `hosting`，我们将 _src/front_of_house.rs_ 更改为仅包含 `hosting` 模块的声明：
 
 <Listing file-name="src/front_of_house.rs">
 
@@ -62,8 +38,7 @@ the declaration of the `hosting` module:
 
 </Listing>
 
-Then, we create a _src/front_of_house_ directory and a _hosting.rs_ file to
-contain the definitions made in the `hosting` module:
+然后，我们创建一个 _src/front_of_house_ 目录和一个 _hosting.rs_ 文件，以包含 `hosting` 模块中的定义：
 
 <Listing file-name="src/front_of_house/hosting.rs">
 
@@ -73,57 +48,32 @@ contain the definitions made in the `hosting` module:
 
 </Listing>
 
-If we instead put _hosting.rs_ in the _src_ directory, the compiler would
-expect the _hosting.rs_ code to be in a `hosting` module declared in the crate
-root and not declared as a child of the `front_of_house` module. The
-compiler’s rules for which files to check for which modules’ code mean the
-directories and files more closely match the module tree.
+如果我们将 _hosting.rs_ 放在 _src_ 目录中，编译器会期望 _hosting.rs_ 中的代码位于 crate 根中声明的 `hosting` 模块中，而不是作为 `front_of_house` 模块的子模块声明。编译器用于检查哪些文件对应哪些模块代码的规则，意味着目录和文件与模块树更加匹配。
 
-> ### Alternate File Paths
+> ### 替代文件路径（Alternate File Paths）
 >
-> So far we’ve covered the most idiomatic file paths the Rust compiler uses,
-> but Rust also supports an older style of file path. For a module named
-> `front_of_house` declared in the crate root, the compiler will look for the
-> module’s code in:
+> 到目前为止，我们已经介绍了 Rust 编译器使用的最惯用的文件路径，但 Rust 也支持一种较旧风格的文件路径。对于在 crate 根中声明的名为 `front_of_house` 的模块，编译器会在以下位置查找模块的代码：
 >
-> - _src/front_of_house.rs_ (what we covered)
-> - _src/front_of_house/mod.rs_ (older style, still supported path)
+> - _src/front_of_house.rs_（我们介绍的方式）
+> - _src/front_of_house/mod.rs_（较旧的风格，仍支持）
 >
-> For a module named `hosting` that is a submodule of `front_of_house`, the
-> compiler will look for the module’s code in:
+> 对于作为 `front_of_house` 子模块的名为 `hosting` 的模块，编译器会在以下位置查找模块的代码：
 >
-> - _src/front_of_house/hosting.rs_ (what we covered)
-> - _src/front_of_house/hosting/mod.rs_ (older style, still supported path)
+> - _src/front_of_house/hosting.rs_（我们介绍的方式）
+> - _src/front_of_house/hosting/mod.rs_（较旧的风格，仍支持）
 >
-> If you use both styles for the same module, you’ll get a compiler error.
-> Using a mix of both styles for different modules in the same project is
-> allowed but might be confusing for people navigating your project.
+> 如果你对同一个模块同时使用两种风格，将会收到编译器错误。在同一项目中对不同模块混合使用两种风格是允许的，但可能会让浏览你的项目的人感到困惑。
 >
-> The main downside to the style that uses files named _mod.rs_ is that your
-> project can end up with many files named _mod.rs_, which can get confusing
-> when you have them open in your editor at the same time.
+> 使用名为 _mod.rs_ 的文件风格的主要缺点是，你的项目可能最终会有许多名为 _mod.rs_ 的文件，当你在编辑器中同时打开它们时可能会造成混淆。
 
-We’ve moved each module’s code to a separate file, and the module tree remains
-the same. The function calls in `eat_at_restaurant` will work without any
-modification, even though the definitions live in different files. This
-technique lets you move modules to new files as they grow in size.
+我们已将每个模块的代码移动到单独的文件中，而模块树保持不变。`eat_at_restaurant` 中的函数调用将无需任何修改即可正常工作，即使定义位于不同的文件中。这种技术让你可以在模块大小增长时将其移动到新文件中。
 
-Note that the `pub use crate::front_of_house::hosting` statement in
-_src/lib.rs_ also hasn’t changed, nor does `use` have any impact on what files
-are compiled as part of the crate. The `mod` keyword declares modules, and Rust
-looks in a file with the same name as the module for the code that goes into
-that module.
+请注意，_src/lib.rs_ 中的 `pub use crate::front_of_house::hosting` 语句也没有改变，`use` 也对哪些文件被编译为 crate 的一部分没有任何影响。`mod` 关键字声明模块，Rust 在与模块同名的文件中查找该模块中的代码。
 
-## Summary
+## 总结（Summary）
 
-Rust lets you split a package into multiple crates and a crate into modules so
-that you can refer to items defined in one module from another module. You can
-do this by specifying absolute or relative paths. These paths can be brought
-into scope with a `use` statement so that you can use a shorter path for
-multiple uses of the item in that scope. Module code is private by default, but
-you can make definitions public by adding the `pub` keyword.
+Rust 允许你将一个包（Package）拆分为多个 crate，并将一个 crate 拆分为多个模块（Module），以便你可以从一个模块引用另一个模块中定义的项（Item）。你可以通过指定绝对路径或相对路径来实现这一点。这些路径可以通过 `use` 语句引入作用域，这样你可以在该作用域中多次使用该项时使用更短的路径。模块代码默认是私有的，但你可以通过添加 `pub` 关键字使定义变为公共的。
 
-In the next chapter, we’ll look at some collection data structures in the
-standard library that you can use in your neatly organized code.
+在下一章中，我们将介绍标准库中的一些集合（Collection）数据结构，你可以在组织良好的代码中使用它们。
 
 [paths]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
