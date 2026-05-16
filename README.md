@@ -28,7 +28,7 @@
 
 ## 构建依赖
 
-构建本书需要 [mdBook]，最好是与本项目中使用的版本相同（mdbook v0.5.2）。
+构建本书需要 [mdBook]，最好是与本项目中使用的版本相同（mdbook v0.5.2）。或查看
 
 
 安装方法如下：
@@ -73,11 +73,21 @@ $ start chrome.exe .\book\index.html            # Windows (Cmd)
 $ cd packages/trpl
 $ mdbook test --library-path packages/trpl/target/debug/deps
 ```
+## 贡献
+### 文档结构说明
+事实上，通过查看[rust-lang/book]main分支可以发现，这套文档有两个历史版本和一个正在持续更新的版本，这个正在更新的版本以markdown
+本仓库是使用ai直接翻译的[rust-lang/book](https://github.com/rust-lang/book),原文在本仓库的/src-en下，
+
 # 未来计划
 使用手搓+ai写一个基于ii8n.site或git2-rs+similar+pulldown-crmark从头编写一个支持如下功能的翻译模块：
 - 检测英文文档是否更新变动
 - 将markdown内容解析为对象（文本段落、标题、注释、代码）
 - ai翻译
+
+------
+
+<br>
+<br>
 
 # 来自rust-lang/book官方仓库的说明
 ## 贡献指南（Contributing）
