@@ -1,124 +1,79 @@
-## Functions
+## 函数（Functions）
 
-Functions are prevalent in Rust code. You’ve already seen one of the most
-important functions in the language: the `main` function, which is the entry
-point of many programs. You’ve also seen the `fn` keyword, which allows you to
-declare new functions.
+函数（Functions）在 Rust 代码中随处可见。你已经见过这门语言中最重要的函数之一：`main` 函数，它是许多程序的入口点（entry point）。你也见过 `fn` 关键字，它用来声明新函数。
 
-Rust code uses _snake case_ as the conventional style for function and variable
-names, in which all letters are lowercase and underscores separate words.
-Here’s a program that contains an example function definition:
+Rust 代码使用 _蛇形命名法（snake case）_ 作为函数和变量名称的常规风格，即所有字母都是小写，单词之间用下划线分隔。下面是一个包含示例函数定义的程序：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-16-functions/src/main.rs}}
 ```
 
-We define a function in Rust by entering `fn` followed by a function name and a
-set of parentheses. The curly brackets tell the compiler where the function
-body begins and ends.
+在 Rust 中，我们通过输入 `fn` 后跟函数名和一对圆括号来定义函数。花括号告诉编译器函数体（function body）的开始和结束位置。
 
-We can call any function we’ve defined by entering its name followed by a set
-of parentheses. Because `another_function` is defined in the program, it can be
-called from inside the `main` function. Note that we defined `another_function`
-_after_ the `main` function in the source code; we could have defined it before
-as well. Rust doesn’t care where you define your functions, only that they’re
-defined somewhere in a scope that can be seen by the caller.
+我们可以通过输入函数名后跟一对圆括号来调用任何已定义的函数。因为 `another_function` 在程序中被定义了，所以它可以从 `main` 函数内部被调用。注意，我们在源代码中是在 `main` 函数 _之后_ 定义 `another_function` 的；我们也可以将其定义在之前。Rust 不关心你在哪里定义函数，只要它们定义在调用者能看到的某个作用域（scope）中即可。
 
-Let’s start a new binary project named _functions_ to explore functions
-further. Place the `another_function` example in _src/main.rs_ and run it. You
-should see the following output:
+让我们新建一个名为 _functions_ 的二进制项目（binary project）来进一步探索函数。将 `another_function` 示例放入 _src/main.rs_ 中并运行它。你应该会看到以下输出：
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-16-functions/output.txt}}
 ```
 
-The lines execute in the order in which they appear in the `main` function.
-First the “Hello, world!” message prints, and then `another_function` is called
-and its message is printed.
+各行代码按照它们在 `main` 函数中出现的顺序执行。首先打印 "Hello, world!" 消息，然后调用 `another_function` 并打印其消息。
 
-### Parameters
+### 参数（Parameters）
 
-We can define functions to have _parameters_, which are special variables that
-are part of a function’s signature. When a function has parameters, you can
-provide it with concrete values for those parameters. Technically, the concrete
-values are called _arguments_, but in casual conversation, people tend to use
-the words _parameter_ and _argument_ interchangeably for either the variables
-in a function’s definition or the concrete values passed in when you call a
-function.
+我们可以定义带有 _参数（parameters）_ 的函数，参数是函数签名（signature）的一部分的特殊变量。当一个函数有参数时，你可以为这些参数提供具体的值。从技术上讲，这些具体的值被称为 _实参（arguments）_，但在日常交流中，人们往往会混用 _parameter_ 和 _argument_ 这两个词来指代函数定义中的变量或调用函数时传入的具体值。
 
-In this version of `another_function` we add a parameter:
+在这个版本的 `another_function` 中，我们添加了一个参数：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/src/main.rs}}
 ```
 
-Try running this program; you should get the following output:
+尝试运行这个程序；你应该会得到以下输出：
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/output.txt}}
 ```
 
-The declaration of `another_function` has one parameter named `x`. The type of
-`x` is specified as `i32`. When we pass `5` in to `another_function`, the
-`println!` macro puts `5` where the pair of curly brackets containing `x` was
-in the format string.
+`another_function` 的声明有一个名为 `x` 的参数。`x` 的类型被指定为 `i32`。当我们向 `another_function` 传入 `5` 时，`println!` 宏会将 `5` 放入格式字符串中含有一对花括号 `x` 的位置。
 
-In function signatures, you _must_ declare the type of each parameter. This is
-a deliberate decision in Rust’s design: Requiring type annotations in function
-definitions means the compiler almost never needs you to use them elsewhere in
-the code to figure out what type you mean. The compiler is also able to give
-more-helpful error messages if it knows what types the function expects.
+在函数签名（function signatures）中，你 _必须_ 声明每个参数的类型。这是 Rust 设计中的一个深思熟虑的决定：要求在函数定义中进行类型注解（type annotation），意味着编译器几乎不需要你在代码的其他地方使用它们来推断你的类型。如果编译器知道函数期望什么类型，它也能给出更有帮助的错误信息。
 
-When defining multiple parameters, separate the parameter declarations with
-commas, like this:
+当定义多个参数时，使用逗号分隔参数声明，就像这样：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/src/main.rs}}
 ```
 
-This example creates a function named `print_labeled_measurement` with two
-parameters. The first parameter is named `value` and is an `i32`. The second is
-named `unit_label` and is type `char`. The function then prints text containing
-both the `value` and the `unit_label`.
+这个例子创建了一个名为 `print_labeled_measurement` 的函数，它有两个参数。第一个参数名为 `value`，类型是 `i32`。第二个参数名为 `unit_label`，类型是 `char`。然后该函数打印包含 `value` 和 `unit_label` 的文本。
 
-Let’s try running this code. Replace the program currently in your _functions_
-project’s _src/main.rs_ file with the preceding example and run it using `cargo
-run`:
+让我们尝试运行这段代码。将当前 _functions_ 项目的 _src/main.rs_ 文件中的程序替换为前面的示例，然后使用 `cargo run` 运行它：
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/output.txt}}
 ```
 
-Because we called the function with `5` as the value for `value` and `'h'` as
-the value for `unit_label`, the program output contains those values.
+因为我们用 `5` 作为 `value` 的值，用 `'h'` 作为 `unit_label` 的值调用了该函数，所以程序输出包含了这些值。
 
-### Statements and Expressions
+### 语句与表达式（Statements and Expressions）
 
-Function bodies are made up of a series of statements optionally ending in an
-expression. So far, the functions we’ve covered haven’t included an ending
-expression, but you have seen an expression as part of a statement. Because
-Rust is an expression-based language, this is an important distinction to
-understand. Other languages don’t have the same distinctions, so let’s look at
-what statements and expressions are and how their differences affect the bodies
-of functions.
+函数体（Function bodies）由一系列语句（statements）组成，并可选择以一个表达式（expression）结尾。到目前为止，我们介绍的函数都没有包含结尾表达式，但你已经见过作为语句一部分的表达式了。因为 Rust 是一门基于表达式（expression-based）的语言，这是一个需要理解的重要区别。其他语言没有同样的区分，所以让我们来看看什么是语句和表达式，以及它们的差异如何影响函数体。
 
-- _Statements_ are instructions that perform some action and do not return
-  a value.
-- _Expressions_ evaluate to a resultant value.
+- _语句（Statements）_ 是执行某些操作但不返回值的指令。
+- _表达式（Expressions）_ 会计算并产生一个结果值。
 
-Let’s look at some examples.
+让我们看一些例子。
 
-We’ve actually already used statements and expressions. Creating a variable and
-assigning a value to it with the `let` keyword is a statement. In Listing 3-1,
-`let y = 6;` is a statement.
+实际上，我们已经使用过语句和表达式了。使用 `let` 关键字创建变量并为其赋值是一个语句。在示例 3-1 中，`let y = 6;` 就是一个语句。
 
-<Listing number="3-1" file-name="src/main.rs" caption="A `main` function declaration containing one statement">
+<Listing number="3-1" file-name="src/main.rs" caption="包含一个语句的 `main` 函数声明">
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-01/src/main.rs}}
@@ -126,46 +81,33 @@ assigning a value to it with the `let` keyword is a statement. In Listing 3-1,
 
 </Listing>
 
-Function definitions are also statements; the entire preceding example is a
-statement in itself. (As we’ll see shortly, calling a function is not a
-statement, though.)
+函数定义也是语句；整个前面的例子本身就是一个语句。（不过，正如我们稍后将看到的，调用函数并不是一个语句。）
 
-Statements do not return values. Therefore, you can’t assign a `let` statement
-to another variable, as the following code tries to do; you’ll get an error:
+语句不返回值。因此，你不能将一个 `let` 语句赋值给另一个变量，就像下面的代码尝试做的那样；你会得到一个错误：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/src/main.rs}}
 ```
 
-When you run this program, the error you’ll get looks like this:
+当你运行这个程序时，你会看到如下错误：
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/output.txt}}
 ```
 
-The `let y = 6` statement does not return a value, so there isn’t anything for
-`x` to bind to. This is different from what happens in other languages, such as
-C and Ruby, where the assignment returns the value of the assignment. In those
-languages, you can write `x = y = 6` and have both `x` and `y` have the value
-`6`; that is not the case in Rust.
+`let y = 6` 语句不返回值，所以 `x` 没有可以绑定的东西。这与 C 和 Ruby 等其他语言不同，在这些语言中，赋值会返回赋值的值。在这些语言中，你可以写 `x = y = 6` 并让 `x` 和 `y` 都有值 `6`；但在 Rust 中并非如此。
 
-Expressions evaluate to a value and make up most of the rest of the code that
-you’ll write in Rust. Consider a math operation, such as `5 + 6`, which is an
-expression that evaluates to the value `11`. Expressions can be part of
-statements: In Listing 3-1, the `6` in the statement `let y = 6;` is an
-expression that evaluates to the value `6`. Calling a function is an
-expression. Calling a macro is an expression. A new scope block created with
-curly brackets is an expression, for example:
+表达式会计算出一个值，并且构成了你在 Rust 中编写的大部分其余代码。考虑一个数学运算，比如 `5 + 6`，这是一个计算结果为 `11` 的表达式。表达式可以是语句的一部分：在示例 3-1 中，语句 `let y = 6;` 中的 `6` 就是一个计算结果为 `6` 的表达式。调用函数是一个表达式。调用宏也是一个表达式。用花括号创建的新作用域块（scope block）也是一个表达式，例如：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-20-blocks-are-expressions/src/main.rs}}
 ```
 
-This expression:
+这个表达式：
 
 ```rust,ignore
 {
@@ -174,80 +116,52 @@ This expression:
 }
 ```
 
-is a block that, in this case, evaluates to `4`. That value gets bound to `y`
-as part of the `let` statement. Note the `x + 1` line without a semicolon at
-the end, which is unlike most of the lines you’ve seen so far. Expressions do
-not include ending semicolons. If you add a semicolon to the end of an
-expression, you turn it into a statement, and it will then not return a value.
-Keep this in mind as you explore function return values and expressions next.
+是一个代码块，在这个例子中，它的计算结果为 `4`。该值作为 `let` 语句的一部分被绑定到 `y`。注意 `x + 1` 这一行末尾没有分号，这与你目前看到的大多数行不同。表达式不包含结尾的分号。如果你在表达式末尾加上分号，你就把它变成了一个语句，那么它将不再返回值。在接下来探索函数返回值（return values）和表达式时，请记住这一点。
 
-### Functions with Return Values
+### 具有返回值的函数（Functions with Return Values）
 
-Functions can return values to the code that calls them. We don’t name return
-values, but we must declare their type after an arrow (`->`). In Rust, the
-return value of the function is synonymous with the value of the final
-expression in the block of the body of a function. You can return early from a
-function by using the `return` keyword and specifying a value, but most
-functions return the last expression implicitly. Here’s an example of a
-function that returns a value:
+函数可以向调用它的代码返回值。我们不给返回值命名，但必须在箭头（`->`）之后声明其类型。在 Rust 中，函数的返回值（return value）与函数体（body）块中最后一个表达式的值同义。你可以通过使用 `return` 关键字并指定一个值来提前从函数返回，但大多数函数会隐式地返回最后一个表达式。下面是一个返回值的函数示例：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/src/main.rs}}
 ```
 
-There are no function calls, macros, or even `let` statements in the `five`
-function—just the number `5` by itself. That’s a perfectly valid function in
-Rust. Note that the function’s return type is specified too, as `-> i32`. Try
-running this code; the output should look like this:
+在 `five` 函数中没有函数调用、宏、甚至 `let` 语句——只有数字 `5` 本身。这在 Rust 中是一个完全有效的函数。注意，函数的返回类型也被指定为 `-> i32`。尝试运行这段代码；输出应该如下所示：
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/output.txt}}
 ```
 
-The `5` in `five` is the function’s return value, which is why the return type
-is `i32`. Let’s examine this in more detail. There are two important bits:
-First, the line `let x = five();` shows that we’re using the return value of a
-function to initialize a variable. Because the function `five` returns a `5`,
-that line is the same as the following:
+`five` 中的 `5` 就是函数的返回值，这就是为什么返回类型是 `i32`。让我们更详细地分析一下。这里有两点很重要：首先，`let x = five();` 这一行表明我们正在使用函数的返回值来初始化一个变量。因为函数 `five` 返回 `5`，所以这一行等同于以下代码：
 
 ```rust
 let x = 5;
 ```
 
-Second, the `five` function has no parameters and defines the type of the
-return value, but the body of the function is a lonely `5` with no semicolon
-because it’s an expression whose value we want to return.
+其次，`five` 函数没有参数并定义了返回值的类型，但函数体只有一个孤零零的 `5`，没有分号，因为它是一个表达式，我们想要返回它的值。
 
-Let’s look at another example:
+让我们看另一个例子：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-22-function-parameter-and-return/src/main.rs}}
 ```
 
-Running this code will print `The value of x is: 6`. But what happens if we
-place a semicolon at the end of the line containing `x + 1`, changing it from
-an expression to a statement?
+运行这段代码将打印 `The value of x is: 6`。但是，如果我们在包含 `x + 1` 的那一行末尾加上一个分号，把它从一个表达式（expression）改为一个语句（statement），会发生什么呢？
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/src/main.rs}}
 ```
 
-Compiling this code will produce an error, as follows:
+编译这段代码会产生一个错误，如下所示：
 
 ```console
 {{#include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/output.txt}}
 ```
 
-The main error message, `mismatched types`, reveals the core issue with this
-code. The definition of the function `plus_one` says that it will return an
-`i32`, but statements don’t evaluate to a value, which is expressed by `()`,
-the unit type. Therefore, nothing is returned, which contradicts the function
-definition and results in an error. In this output, Rust provides a message to
-possibly help rectify this issue: It suggests removing the semicolon, which
-would fix the error.
+主要的错误信息 `mismatched types`（类型不匹配）揭示了这段代码的核心问题。函数 `plus_one` 的定义说明它将返回一个 `i32`，但语句不会计算出一个值，而是表达为 `()`，即单元类型（unit type）。因此，什么也没有返回，这与函数定义相矛盾并导致了一个错误。在这段输出中，Rust 提供了一条可能有助于修正此问题的消息：它建议删除分号，这将修复这个错误。

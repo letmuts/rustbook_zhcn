@@ -1,19 +1,14 @@
-## Comments
+## 注释（Comments）
 
-All programmers strive to make their code easy to understand, but sometimes
-extra explanation is warranted. In these cases, programmers leave _comments_ in
-their source code that the compiler will ignore but that people reading the
-source code may find useful.
+所有程序员都努力使他们的代码易于理解，但有时额外的解释也是必要的。在这种情况下，程序员会在源代码中留下 _注释（comments）_，编译器会忽略它们，但阅读源代码的人可能会觉得它们很有用。
 
-Here’s a simple comment:
+这是一个简单的注释：
 
 ```rust
 // hello, world
 ```
 
-In Rust, the idiomatic comment style starts a comment with two slashes, and the
-comment continues until the end of the line. For comments that extend beyond a
-single line, you’ll need to include `//` on each line, like this:
+在 Rust 中，惯用的注释风格是用两个斜杠开始一个注释，并且注释一直延续到行尾。对于超过一行的注释，你需要在每一行都包含 `//`，就像这样：
 
 ```rust
 // So we're doing something complicated here, long enough that we need
@@ -21,25 +16,22 @@ single line, you’ll need to include `//` on each line, like this:
 // explain what's going on.
 ```
 
-Comments can also be placed at the end of lines containing code:
+注释也可以放在包含代码的行的末尾：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-24-comments-end-of-line/src/main.rs}}
 ```
 
-But you’ll more often see them used in this format, with the comment on a
-separate line above the code it’s annotating:
+但更常见的是以下面这种格式使用注释，将注释放在它所注解的代码上方的单独一行：
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">文件名：src/main.rs</span>
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-25-comments-above-line/src/main.rs}}
 ```
 
-Rust also has another kind of comment, documentation comments, which we’ll
-discuss in the [“Publishing a Crate to Crates.io”][publishing]<!-- ignore -->
-section of Chapter 14.
+Rust 还有另一种注释，即文档注释（documentation comments），我们将在第 14 章的[“将 Crate 发布到 Crates.io”][publishing]<!-- ignore --> 一节中讨论。
 
 [publishing]: ch14-02-publishing-to-crates-io.html
