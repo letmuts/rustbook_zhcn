@@ -15,7 +15,7 @@
 
 [releases]: https://github.com/rust-lang/book/releases
 ## 使用的大模型及提示词
-- deepseek-v4-flash
+- deepseek-v4-flash  (部分长文本使用了pro)
 - 工具链：vscode+copilot+DeepSeek V4 for Copilot Chat
 
 提示词：
@@ -74,9 +74,29 @@ $ cd packages/trpl
 $ mdbook test --library-path packages/trpl/target/debug/deps
 ```
 ## 贡献
+本仓库希望并欢迎任何人的贡献,在贡献前请阅读如下内容:
 ### 文档结构说明
-事实上，通过查看[rust-lang/book]main分支可以发现，这套文档有两个历史版本和一个正在持续更新的版本，这个正在更新的版本以markdown
-本仓库是使用ai直接翻译的[rust-lang/book](https://github.com/rust-lang/book),原文在本仓库的/src-en下，
+事实上，通过查看[rust-lang/book]main分支可以发现，这套文档有两个历史版本和一个正在持续更新的版本，这个正在更新的版本的“文档源代码”（即markdown）
+在/src下。
+
+本仓库使用ai直接翻译[rust-lang/book](https://github.com/rust-lang/book)，翻译后的文本在/src下,原文在本仓库的/src-en中，
+
+### 翻译流程说明
+本仓库会每隔一段时间拉取[rust-lang/book](https://github.com/rust-lang/book)/src与本仓库的/src-en进行同步,如果发现变动,
+那么我将会手工使用ai重新翻译发生/src-en下变动的markdown文件,再将翻译好的文件替换本仓库/src中原有旧版本的md文件
+```mermaid
+graph LR
+    A[拉取 rust-lang/src] --> B[同步到本仓库 /src-en 目录]
+    B --> C[检测 /src-en 中变动的 .md 文件]
+    C --> D[完全重新翻译变动的 .md 文件]
+    D --> E[将翻译后的文件替换本仓库 /src 下对应的旧版 .md 文件]
+```
+### 其它部分的变动
+如果[rust-lang/book](https://github.com/rust-lang/book)除了src之外其它的文件(如主题,mdbook等)有了较大的变动,那么本项目则会单独拉取修改.
+要注意`.cargo/cargo.toml.txt`与`rustbook`中`cargo.toml`的区别,当rustbook中cargo.toml发生变动时,往往意味着构建版本的或构建依赖组件mdbook的版本更新
+
+
+
 
 # 未来计划
 使用手搓+ai写一个基于ii8n.site或git2-rs+similar+pulldown-crmark从头编写一个支持如下功能的翻译模块：
