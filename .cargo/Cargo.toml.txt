@@ -1,0 +1,19 @@
+# 如果在安装mdbook或构建文档时出现问题，请参考如下依赖配置安装重新mdbook，或使用rustbook
+# 参见 https://github.com/rust-lang/rust/tree/be326a93323e9b929525b9298f43883ac66b3b2d/src/tools/rustbook
+
+[workspace]
+members = ["../error_index_generator"]
+
+[package]
+name = "rustbook"
+version = "0.1.0"
+license = "MIT OR Apache-2.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.0.32", features = ["cargo"] }
+mdbook-driver = { version = "0.5.2", features = ["search"] }
+mdbook-i18n-helpers = "0.4.0"
+mdbook-spec = { path = "../../doc/reference/tools/mdbook-spec" }
+mdbook-trpl = { path = "../../doc/book/packages/mdbook-trpl" }
+tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
