@@ -1,28 +1,24 @@
 # 《RUst程序设计语言》中文翻译（ai机翻）
-正在翻译中.....
-20260516
+正在翻译中.....  
+主项目:[rust-lang/book](https://github.com/rust-lang/book)
+
+### 本项目的特性
+- 使用最新的deepseek-v4-flash/pro进行机翻,大幅度提高了文档的翻译质量和准确性.
+- 对文档中的专有名词、概念进行了括号内英文的注释。
+- 基于ruat-lang官方有关项目，提供清晰可靠的构建向导、翻译工具链说明、贡献流程、结构说明。
+- 更低的二次修改门槛，更清晰的文档结构化安排（/src-en），更便于明晰中文文档与官方英文文档的版本差异。
 
 
-
-
-你也可以在线免费阅读这本书。请将本书视为与最新的[稳定版]、[测试版]或[nightly] Rust 发行版一同提供。请注意，这些版本中可能存在的问题可能已经在本仓库中得到了修复，因为这些版本更新频率较低。
-
-[稳定版]: https://doc.rust-lang.org/stable/book/
-[测试版]: https://doc.rust-lang.org/beta/book/
-[nightly]: https://doc.rust-lang.org/nightly/book/
-
-请查看[发布页面（releases）][releases]以下载本书中所有代码清单（code listings）的代码。
-
-[releases]: https://github.com/rust-lang/book/releases
 ## 使用的大模型及提示词
 - deepseek-v4-flash  (部分长文本使用了pro)
-- 工具链：vscode+copilot+DeepSeek V4 for Copilot Chat
+- 工具链：vscode+github copilot+DeepSeek V4 for Copilot Chat
 
-提示词：
+提示词（user prompt）：
 ```
 请翻译这个markdown文件：
 要求：
 - 逐个.md文件进行翻译，翻译完一个md文件结束对一个md文件的翻译，不互相干扰。
+- 当分不清文档中某个字符是ASCII或Unicode编码格式时，采用原样输出的方式。当这个字符处在代码块中时，不对其进行如何处理、
 - 不翻译代码块，代码块中的代码要保持原样，但可以视情况翻译代码块中大段的注释。
 - 对于专业名词，要在翻译的同时，使用括号（）的形式，将英文原文注释在翻译内容的后面。
 ```
@@ -83,6 +79,7 @@ $ mdbook test --library-path packages/trpl/target/debug/deps
 在/src下。
 
 本仓库使用ai直接翻译[rust-lang/book](https://github.com/rust-lang/book)，翻译后的文本在/src下,原文在本仓库的/src-en中，
+- /src-en与rust-lang/book的最后同步日期:20250516
 
 ### 翻译流程说明
 本仓库会每隔一段时间拉取[rust-lang/book](https://github.com/rust-lang/book)/src与本仓库的/src-en进行同步,如果发现变动,
@@ -115,6 +112,16 @@ graph LR
 <br>
 
 # 来自rust-lang/book官方仓库的说明
+你也可以在线免费阅读这本书。请将本书视为与最新的[稳定版]、[测试版]或[nightly] Rust 发行版一同提供。请注意，这些版本中可能存在的问题可能已经在本仓库中得到了修复，因为这些版本更新频率较低。
+
+[稳定版]: https://doc.rust-lang.org/stable/book/
+[测试版]: https://doc.rust-lang.org/beta/book/
+[nightly]: https://doc.rust-lang.org/nightly/book/
+
+请查看[发布页面（releases）][releases]以下载本书中所有代码清单（code listings）的代码。
+
+[releases]: https://github.com/rust-lang/book/releases
+
 ## 贡献指南（Contributing）
 
 我们非常欢迎你的帮助！请查看 [CONTRIBUTING.md][contrib] 了解我们正在寻找的贡献（contributions）类型。
