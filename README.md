@@ -107,16 +107,6 @@ graph LR
 要注意`.cargo/cargo.toml.txt`与`rustbook`中`cargo.toml`的区别,当rustbook中cargo.toml发生变动时,往往意味着构建版本的或构建依赖组件mdbook的版本更新
 
 
-
-
-# 未来计划
-使用手搓+ai写一个基于git2-rs+similar+pulldown-crmark从头编写一个支持如下功能的翻译模块：
-- 检测英文文档是否更新变动
-- 将markdown内容解析为对象（文本段落、标题、注释、代码）
-- ai翻译
-
-------
-
 <br>
 <br>
 
